@@ -1,7 +1,6 @@
-# sotoon_vm
+# Sotoon Vm Automation
 
-Create Sotoon compute VMs from a declarative inventory.
-One VM = one ExternalIP (optional) + one Link + one Instance.
+This Terraform-like helps users to Create Sotoon compute VMs from a declarative inventory in single/bulk.
 
 Requires `python3` and `PyYAML`.
 
@@ -27,7 +26,7 @@ token: "service-user:<token>"
 
 vars:                        # inherited by every group
   region: thr1               # thr1 | thr3 | thr4
-  image: ubuntu-22.04
+  image: ubuntu-26.04
   iam_ssh: true              # SSH via Sotoon IAM (default)
   network:
     vpc: default
@@ -83,7 +82,7 @@ by key rather than replacing the whole block.
 | `hosts` | explicit VM names, instead of `count` |
 | `name` | name prefix, if not the group name |
 | `region` | `thr1`, `thr3`, `thr4`; per group |
-| `image` | exact image name, e.g. `ubuntu-22.04` |
+| `image` | exact image name, e.g. `ubuntu-22.04` or sth else |
 | `type` | `{group, cores, os_disk}` or a literal name |
 | `network.vpc` / `.subnet` | required |
 | `network.public_ip` | allocate an ExternalIP and bind it to the link |
