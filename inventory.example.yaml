@@ -1,0 +1,46 @@
+workspace: "WORKSPACE-UUID"
+token: "TOKEN-WITH-Valid-Creds"
+
+# Inherited by every group; any key can be overridden per group.
+vars:
+  region: thr1
+  image: ubuntu-26.04
+  network:
+    vpc: default
+    subnet: default
+    public_ip: false
+  user:
+    name: ubuntu            # SSH is authenticated by Sotoon IAM (iam_ssh, default true)
+  labels:
+    env: staging
+
+groups:
+
+  kafka:
+    name: kafka-internal
+    count: 2                   # -> kafka-internal-01 .. kafka-internal-02
+    type:
+      group: general           # eco | general | compute | memory
+      cores: 8
+      os_disk: 480Gi           # total, must divide by cores -> g1d60-8
+    labels:
+      app: apache-kafka
+
+ # haproxy:
+ #   name: lb                  # -> lb-1, lb-2 instead of haproxy-1
+ #   count: 2
+ #   type: g1d60-1             # a literal type name works too
+ #   network:
+ #     public_ip: true         # merges over the inherited network block
+ #     reserve_ip: true
+ #   labels:
+ #     app: haproxy
+
+ #bastion:
+ #  hosts: [bastion]          # explicit names instead of a count
+ #  type:
+ #     group: eco
+ #     cores: 1
+ #     os_disk: 30Gi
+ #   network:
+ #     public_ip: true
